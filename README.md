@@ -1,5 +1,4 @@
 # NodeImageUploadResize
-You can find full blog post here.
 
 docker build -t node-fake-backend .
 
