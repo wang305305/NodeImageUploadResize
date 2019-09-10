@@ -57,7 +57,7 @@ router.post('/', upload.single('image'), urlencodedParser, async function (req, 
 
 
   const filename = await fileUpload.save(req.file.buffer);
-  return res.status(200).json({ name: filename, response: response, result:(response.dlnum=='a1234-12345-12345')});
+  return res.status(200).json({ result:(response.dlnum=='a1234-12345-12345')});
 });
 
 module.exports = router;
