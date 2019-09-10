@@ -16,7 +16,7 @@ router.get('/', async function (req, res) {
   await res.render('index');
 });
 
-router.post('/post', upload.single('image'), urlencodedParser, async function (req, res) {
+router.post('/', upload.single('image'), urlencodedParser, async function (req, res) {
   response = {
     dlnum:req.body.DLNum,
     dob:req.body.DOB,

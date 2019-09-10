@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: di-photo-validation
+  labels:
+    app: di-photo-validation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: di-photo-validation
+  template:
+    metadata:
+      labels:
+        app:  di-photo-validation
+    spec:
+      containers:
+      - name: di-photo-validation
+        image: dev-icp-cluster.icp:8500/gsic-bd-dev/di-photo-validation-image:latest
+        imagePullPolicy: Always
+        ports:
+        - name: http
+          containerPort: 3000
+          protocol: TCP
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: di-photo-validation-service
+  labels:
+    app: di-photo-validation
+spec:
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8081
+    targetPort: 3000
+  selector:
+    app: di-photo-validation
+  type: ClusterIP
+  sessionAffinity: None
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: di-photo-validation-ingress
+  labels:
+    app: di-photo-validation
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: 'false'
+spec:
+  rules:
+  - host: proxy.dev-icp-cluster.sus.ebc.gov.on.ca
+    http:
+      paths:
+      - path: "/gsic-bd-dev/di/pv"
+        backend:
+          serviceName: di-photo-validation-service
+          servicePort: 8081
+---
