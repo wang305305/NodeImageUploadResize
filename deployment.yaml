@@ -55,7 +55,7 @@ spec:
   - host: proxy.dev-icp-cluster.sus.ebc.gov.on.ca
     http:
       paths:
-      - path: "/gsic-bd-dev/di/pv"
+      - path: "/gsic-bd-dev/di/pct/"
         backend:
           serviceName: di-photo-validation-service
           servicePort: 8081
